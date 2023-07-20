@@ -2,6 +2,7 @@
 // when auth is implemented, it is going to be secured
 
 import { NextResponse } from "next/server";
+import { prisma } from "@/db/prisma";
 
 export async function POST(req) {
   // get request body
@@ -18,22 +19,25 @@ export async function POST(req) {
   }
   // if body is valid, add needed information to json (created_at, modified_at, uid)
   const date = new Date();
-  const question = {
-    question: json.question,
-    qid: 0,
-    pid: 1,
-    cid: 1,
-    uid: 0,
-    created_at: date,
-    modified_at: date
-  };
 
   // save question to database
+  const result = await prisma.question.create({
+    data: {
+      question: json.question,
+      qid: 0,
+      cid: json.cid,
+      pid: json.pid,
+      uid: 0,
+      created_at: date,
+      modified_at: date
+    }
+  })
+
+  console.log(result)
 
   // send return
   const data = {
-    message: "Question added!",
-    question
+    message: "Question added!"
   };
   return NextResponse.json(data, {status: 201});
 }
