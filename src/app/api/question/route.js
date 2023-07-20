@@ -34,6 +34,6 @@ export async function POST(req) {
   const data = {
     message: "Question added!",
     question
-  }
+  };
   return NextResponse.json(data, {status: 201});
 }
