@@ -13,15 +13,7 @@ export async function POST(req) {
     const data = {message: "Request JSON is missing some stuff"};
     return NextResponse.json(data, {status: 400});
   }
-  // check if question already exists in pack
-  const check = await prisma.question.findUnique({
-    where: {
-      question: json.question,
-      pid: json.pid
-    }
-  });
-
-
+  
   // if body is valid, add needed information to json (created_at, modified_at, uid)
   const date = new Date();
 
