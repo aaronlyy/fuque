@@ -16,8 +16,8 @@ model Question {
   pack Pack @relation(fields: [pid], references: [id])
 
   question String
-  created_at DateTime
-  modified_at DateTime
+  createdAt DateTime @default(now())
+  modifiedAt DateTime @updatedAt
 }
 
 model Pack {
@@ -28,9 +28,10 @@ model Pack {
 
   name String @unique
   description String
-  public Boolean
-  created_at DateTime
-  modified_at DateTime
+  nsfw Boolean @default(false)
+  public Boolean @default(false)
+  createdAt DateTime @default(now())
+  modifiedAt DateTime @updatedAt
 }
 
 model User {
@@ -38,4 +39,6 @@ model User {
   packs Pack[]
 
   username String @unique
+  createdAt DateTime @default(now())
+  modifiedAt DateTime @updatedAt
 }
