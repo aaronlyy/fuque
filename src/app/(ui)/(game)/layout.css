@@ -1,0 +1,39 @@
+body {
+  height: 100vh;
+  padding: 1rem;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+header ul {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  gap: 1rem;
+}
+
+main {
+  width: 100%;
+}
+@media only screen and (min-width: 700px) {
+  main {
+    width: 50%;
+  }
+}
+
+.header h1 {
+  text-align: center;
+}
+

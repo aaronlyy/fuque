@@ -1,0 +1,10 @@
+.Home {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.Home p {
+  text-align: center;
+}
