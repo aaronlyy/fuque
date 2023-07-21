@@ -2,7 +2,8 @@
 // when auth is implemented, it is going to be secured
 
 import { NextResponse } from "next/server";
-import { prisma } from "@/db/prisma";
+import { Prisma } from "@prisma/client";
+import { prisma } from '@/prisma';
 
 export async function POST(req) {
   // get request body
@@ -13,27 +14,39 @@ export async function POST(req) {
     return NextResponse.json(data, {status: 400});
   }
   // check if question already exists in pack
-  if (false) {
-    const data = {message: "Question already exists in this pack"};
-    return NextResponse.json({data}, {status: 400});
-  }
+  const check = await prisma.question.findUnique({
+    where: {
+      question: json.question,
+      pid: json.pid
+    }
+  });
+
+
   // if body is valid, add needed information to json (created_at, modified_at, uid)
   const date = new Date();
 
   // save question to database
-  const result = await prisma.question.create({
-    data: {
-      question: json.question,
-      qid: 0,
-      cid: json.cid,
-      pid: json.pid,
-      uid: 0,
-      created_at: date,
-      modified_at: date
+  try {
+    await prisma.question.create({
+      data: {
+        question: json.question,
+        qid: 0,
+        cid: json.cid,
+        pid: json.pid,
+        uid: 0,
+        created_at: date,
+        modified_at: date
+      }
+    })
+  }
+  catch (e) {
+    if (e instanceof Prisma.PrismaClientKnownRequestError) {
+      const data = {
+        "message": "Primsa Error"
+      }
+      return NextResponse.json(data, {status: 400});
     }
-  })
-
-  console.log(result)
+  }
 
   // send return
   const data = {
