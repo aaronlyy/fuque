@@ -39,6 +39,7 @@ model User {
   packs Pack[]
 
   username String @unique
+  passwordHash String
   createdAt DateTime @default(now())
   modifiedAt DateTime @updatedAt
 }
